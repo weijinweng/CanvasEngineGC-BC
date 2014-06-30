@@ -2,6 +2,9 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include "GUI.h"
+#include "GUIassets.h"
+#include <string>
 
 SDL_Window* mainWindow = NULL;
 SDL_Renderer* mainRenderer = NULL;
@@ -40,14 +43,14 @@ bool Init()
 	}
 	else
 	{
-		mainWindow = SDL_CreateWindow("Canvas Engine", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		mainWindow = SDL_CreateWindow("Canvas Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if(mainWindow == NULL)
 		{
 			printf("SDL create window error %s\n", SDL_GetError());
 			return false;
 		}
 		else{
-			
+			SDL_GetWindowSize(mainWindow, &SCREEN_WIDTH, &SCREEN_HEIGHT);
 			mainRenderer = SDL_CreateRenderer( mainWindow, -1, SDL_RENDERER_ACCELERATED);
 			if(mainRenderer == NULL)
 			{
@@ -70,7 +73,7 @@ bool Init()
 					}
 					else
 					{
-						CanvasFont = TTF_OpenFont("font/Helvetica.ttf", 400);
+						CanvasFont = TTF_OpenFont("font/Tahoma.ttf", 72);
 						if(CanvasFont == NULL)
 						{
 							printf("TTF_OpenFont failed %s\n", TTF_GetError());
@@ -100,10 +103,18 @@ void close()
 
 int main(int argc, char* argv[])
 {
+
 	if(Init())
 	{
+		gObj* firstDiv = new gObj(100, 100, 400, 400);
+		editorGUI* editor = new editorGUI();
+		firstDiv->setColor(0, 0, 0, 255);
+		printf("%d\n",deltaTime);
+		firstDiv->animate(TOP, 200, 1000);
+		editor->initialize();
 		while(!quit)
 		{
+
 			SDL_Event e;
 			while(SDL_PollEvent(&e)>0)
 			{
@@ -111,7 +122,20 @@ int main(int argc, char* argv[])
 				{
 					quit = true;
 				}
+				editor->handleMouse(&e);
 			}
+
+			SDL_SetRenderDrawColor(mainRenderer, 255, 255, 255, 255);
+			SDL_RenderClear(mainRenderer);
+			setFrame();
+			std::string text = std::to_string( 1000.0/(deltaTime>0?deltaTime:1));
+			firstDiv->setText(text);
+			firstDiv->play(deltaTime);
+			firstDiv->render(0,0);
+			editor->play(deltaTime);
+			editor->render(0,0);
+			SDL_RenderPresent(mainRenderer);
+
 		}
 	}
 	close();

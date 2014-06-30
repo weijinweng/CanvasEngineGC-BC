@@ -7,13 +7,26 @@
 #include <SDL_ttf.h>
 #include <list>
 
+
+
 enum DIV_VARIABLES
 {
 	TOP,
 	LEFT,
-	WIDT,
+	WIDTH,
 	HEIGHT,
 	OPACITY,
+	RELATIVE,
+	ABSOLUTE,
+	FIXED,
+	RELATIVE_LEFT
+};
+
+enum TEXT_TYPE
+{
+	CENTERED_TEXT,
+	RIGHT_TEXT,
+	LEFT_TEXT
 };
 //Animations a int value based on destination value and time.
 class intAnimation
@@ -21,8 +34,10 @@ class intAnimation
 public:
 	intAnimation(int* edit, int coordinate, int time);
 	int coordinate;
+	int origin;
 	int* v;
 	int time;
+	int tpassed;
 	bool play(int timepassed);
 };
 
@@ -35,35 +50,50 @@ public:
 	void play(int timpassed);
 	void animate(int value, int time);
 	void delay(int time);
+	bool operator= (int other);
 	std::list<intAnimation> animations;
 };
 
 
 
-class div
+class gObj
 {
 	SDL_Rect renderRect;
 public:
-	div(int top, int left, int height, int width);
-	~div();
+	gObj(int top, int left, int width, int height);
+	~gObj();
 	bool setImage(std::string img);
-	void handleMouse(SDL_Event* e);
-	void onMouseDown();
-	void onMouseUp();
-	void onHover();
-	void offHover();
-	void animate(int variable, int destination, int timepassed);
-	void render();
+	void setColor(int r, int g, int b, int a);
+	bool setText(std::string text);
+	virtual void handleMouse(SDL_Event* e);
+	virtual void childHandleMouse(int x, int y, SDL_Event* e);
+	virtual void onMouseDown();
+	virtual void onMouseUp();
+	virtual void onHover();
+	virtual void offHover();
+	void addGObj( gObj* obj);
+	void play(int timepassed);
+	gObj* animate(int variable, int destination, int timepassed);
+	void render(int x, int y);
 	SDL_Texture* background;
 	SDL_Color backgroundColor;
 	SDL_Texture* textTexture;
+	SDL_Color textColor;
 	int fontHeight;
+	int textHeight;
+	int textWidth;
+	int textOrientation;
+	int position;
 	Cint opacity;
 	std::string text;
 	std::string id;
 	std::string Class;
 	Cint top, left, width, height;
-	std::list<div*> children;
+	std::list<gObj*> children;
+	bool mousedown;
+	bool hover;
+	bool show;
 };
+
 
 #endif

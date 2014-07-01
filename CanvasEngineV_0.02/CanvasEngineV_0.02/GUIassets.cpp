@@ -82,7 +82,12 @@ tabButton::tabButton(int top, int left, int width, int height, tab* tabTarget, s
 	target = tabTarget;
 	fontHeight = 25;
 	this->setColor(191, 191, 191, 255);
+	SDL_Color grey = {40, 40, 40};
+	ctextTexture.textColor = grey;
 	setText(text);
+
+
+
 	position = RELATIVE_LEFT;
 	Class = "tabButton";
 
@@ -117,6 +122,8 @@ void tabButton::onMouseUp()
 boolToggler::boolToggler(int top, int left, int width, int height, bool* target, std::string text):gObj(top, left, width, height)
 {
 	this->target = target;
+	SDL_Color grey = {40, 40, 40};
+	ctextTexture.textColor = grey;
 	setText(text);
 }
 
@@ -181,11 +188,11 @@ editorGUI::editorGUI():gObj(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 	addGObj(qButton);
 	tab* firstTab = new tab(0, 40, SCREEN_WIDTH, 140, this);
 	addGObj(firstTab);
-	tabButton* firstTabButton = new tabButton(180, 0, 100, 30, firstTab, "First");
+	tabButton* firstTabButton = new tabButton(180, 0, 100, 30, firstTab, "home");
 	addGObj(firstTabButton);
 	tab* secondTab = new tab(0, 40, SCREEN_WIDTH, 140, this);
 	addGObj(secondTab);
-	tabButton* secondTabButton = new tabButton(180, 0, 100, 30, secondTab, "Second");
+	tabButton* secondTabButton = new tabButton(180, 0, 100, 30, secondTab, "debug");
 	addGObj(secondTabButton);
 	firstTab->showTab();
 	gObj* partitioner = new gObj(178, 0, SCREEN_WIDTH, 2);

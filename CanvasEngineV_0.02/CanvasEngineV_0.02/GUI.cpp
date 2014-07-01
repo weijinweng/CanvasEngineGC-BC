@@ -14,6 +14,7 @@ CanvasTexture::CanvasTexture()
 {
 	texture = NULL;
 	pixel = NULL;
+	textColor;
 }
 
 CanvasTexture::CanvasTexture(std::string img)
@@ -90,8 +91,8 @@ bool CanvasTexture::loadImage(std::string img)
 
 bool CanvasTexture::loadText(std::string text)
 {
-	SDL_Color textColor = {0, 0, 0};
-	SDL_Surface* textSurface = TTF_RenderText_Solid(CanvasFont, text.c_str(), textColor);
+
+	SDL_Surface* textSurface = TTF_RenderText_Blended(CanvasFont, text.c_str(), textColor);
 	if(textSurface == NULL)
 	{
 		printf("TT_RenderText_Blended error %s\n", TTF_GetError());
@@ -102,24 +103,15 @@ bool CanvasTexture::loadText(std::string text)
 			SDL_DestroyTexture(texture);
 			texture = NULL;
 		}
-		SDL_Surface* optSurface = SDL_ConvertSurfaceFormat(textSurface, SDL_PIXELFORMAT_RGBA8888, NULL);
-		if(optSurface == NULL)
-		{
-			printf("Unable to convert surface! %s\n", SDL_GetError());
-		} else {
-		texture = SDL_CreateTexture(mainRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, optSurface->w, optSurface->h);
+		texture = SDL_CreateTextureFromSurface(mainRenderer, textSurface);
 		if(texture == NULL)
 		{
-			printf("Unable to create texture %s\n", SDL_GetError());
-		} else {
-                SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
-				SDL_LockTexture(texture, &optSurface->clip_rect, &pixel, &pitch);
-				memcpy(pixel, optSurface->pixels, optSurface->pitch*optSurface->h);
-				SDL_UnlockTexture(texture);
-				pixel = NULL;
-				width = optSurface->w;
-				height = optSurface->h;
-			}
+			printf("SDL_CreateTextureFromSurface error %s\n", SDL_GetError());
+		}
+		else {
+			SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
+			height = textSurface->h;
+			width = textSurface->w;
 		}
 	}
 	SDL_FreeSurface(textSurface);

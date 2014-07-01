@@ -116,9 +116,12 @@ int main(int argc, char* argv[])
 
 	if(Init())
 	{
-		gObj* firstDiv = new gObj(SCREEN_WIDTH-400, 700, 400, 400);
+		gObj* firstDiv = new gObj(SCREEN_HEIGHT-400, SCREEN_WIDTH-400, 400, 400);
+		firstDiv->setText("hi");
+		SDL_Color black = {0 , 0, 0};
+		firstDiv->ctextTexture.textColor = black;
 		editorGUI* editor = new editorGUI();
-		firstDiv->setColor(0, 0, 0, 255);
+		firstDiv->setColor(255, 255, 255, 255);
 		editor->initialize();
 		SDL_SetRenderDrawBlendMode(mainRenderer, SDL_BLENDMODE_NONE);
 		while(!quit)
@@ -140,7 +143,6 @@ int main(int argc, char* argv[])
 			setFrame();
 			std::string text = std::to_string( deltaTime);
 			char* alter = const_cast<char*> (text.c_str());
-
 			firstDiv->setText(text);
 			firstDiv->play(deltaTime);
 			editor->play(deltaTime);

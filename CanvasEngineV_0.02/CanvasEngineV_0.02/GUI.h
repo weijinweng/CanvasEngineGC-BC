@@ -20,6 +20,8 @@ public:
 	int width;
 	int height;
 
+	SDL_Color textColor;
+
 	CanvasTexture();
 	CanvasTexture(std::string img);
 	bool lockTexture();

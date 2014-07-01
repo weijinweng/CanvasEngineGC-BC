@@ -80,7 +80,7 @@ tab* tab::showTab()
 tabButton::tabButton(int top, int left, int width, int height, tab* tabTarget, std::string text):gObj(top, left, width, height)
 {
 	target = tabTarget;
-	fontHeight = 30;
+	fontHeight = 25;
 	this->setColor(191, 191, 191, 255);
 	setText(text);
 	position = RELATIVE_LEFT;
@@ -135,7 +135,7 @@ void boolToggler::onMouseDown()
 
 }
 
-quitButton::quitButton():boolToggler(0, SCREEN_WIDTH-50, 50, 30, &quit, "X")
+quitButton::quitButton():boolToggler(0, SCREEN_WIDTH-50, 50, 40, &quit, "X")
 {
 	setColor(14, 65, 194, 255);
 	textColor.a = 255;
@@ -148,22 +148,22 @@ quitButton::quitButton():boolToggler(0, SCREEN_WIDTH-50, 50, 30, &quit, "X")
 void quitButton::offHover()
 {
 
-		this->setColor(14, 65, 194, 255);
+	this->setColor(242, 246, 172, 255);
 
 }
 
 void quitButton::onHover()
 {
-	this->setColor(18, 80, 237, 255);
+	this->setColor(248, 252, 176, 255);
 }
 void quitButton::onMouseDown()
 {
-	this->setColor(14, 65, 194, 255);
+	this->setColor(242, 246, 172, 255);
 }
 
 void quitButton::onMouseUp()
 {
-	setColor(18, 80, 237, 255);
+
 	if(mousedown)
 	{
 		*target = !*target;

@@ -116,11 +116,9 @@ int main(int argc, char* argv[])
 
 	if(Init())
 	{
-		gObj* firstDiv = new gObj(100, 100, 400, 400);
+		gObj* firstDiv = new gObj(SCREEN_WIDTH-400, 700, 400, 400);
 		editorGUI* editor = new editorGUI();
 		firstDiv->setColor(0, 0, 0, 255);
-
-		firstDiv->animate(TOP, 200, 1000);
 		editor->initialize();
 		SDL_SetRenderDrawBlendMode(mainRenderer, SDL_BLENDMODE_NONE);
 		while(!quit)

@@ -10,7 +10,18 @@
 
 class editorGUI;
 
-
+class draggableWindow:public gObj
+{
+public:
+	bool drag;
+	int xOffset;
+	int yOffset;
+	draggableWindow(int left, int top, int width, int height);
+	virtual void onMouseDown();
+	virtual void onMouseUp();
+	virtual void onHover();
+	virtual void offHover();
+};
 
 class tab:public gObj
 {

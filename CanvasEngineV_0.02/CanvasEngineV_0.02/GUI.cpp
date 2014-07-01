@@ -8,6 +8,156 @@
 
 extern SDL_Renderer* mainRenderer;
 extern TTF_Font* CanvasFont;
+extern SDL_Window* mainWindow;
+
+CanvasTexture::CanvasTexture()
+{
+	texture = NULL;
+	pixel = NULL;
+}
+
+CanvasTexture::CanvasTexture(std::string img)
+{
+	texture = NULL;
+	pixel = NULL;
+	loadImage(img);
+}
+
+bool CanvasTexture::lockTexture()
+{
+	if( pixel!=NULL)
+	{
+		return false;
+	}else {
+		if(SDL_LockTexture(texture, NULL, &pixel, &pitch)!=0)
+		{
+			printf("error locking %s\n", SDL_GetError());
+			return false;
+		}
+		return true;
+	}
+}
+
+bool CanvasTexture::unlockTexture()
+{
+	if( pixel = NULL)
+	{
+		return true;
+	} else {
+		SDL_UnlockTexture(texture);
+		pixel = NULL;
+		pitch = 0;
+		return true;
+	}
+}
+
+bool CanvasTexture::loadImage(std::string img)
+{
+	SDL_DestroyTexture(texture);
+
+	texture = NULL;
+
+	SDL_Surface* imgSurface = IMG_Load(img.c_str());
+	if(imgSurface == NULL)
+	{
+		printf("IMG_load failed %s\n", IMG_GetError());
+	}else {
+		SDL_Surface* optSurface = SDL_ConvertSurfaceFormat(imgSurface, SDL_PIXELFORMAT_RGBA8888, NULL);
+		if(optSurface == NULL)
+		{
+			printf("Unable to convert surface! %s\n", SDL_GetError());
+		} else {
+			texture = SDL_CreateTexture(mainRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, optSurface->w, optSurface->h);
+			if(texture == NULL)
+			{
+				printf("Unable to create texture %s\n", SDL_GetError());
+			} else {
+                SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
+				SDL_LockTexture(texture, &optSurface->clip_rect, &pixel, &pitch);
+				memcpy(pixel, optSurface->pixels, optSurface->pitch*optSurface->h);
+				SDL_UnlockTexture(texture);
+				pixel = NULL;
+				
+				width = optSurface->w;
+				height = optSurface->h;
+			}
+		}
+		SDL_FreeSurface(optSurface);
+	}
+	SDL_FreeSurface(imgSurface);
+	return texture != NULL;
+}
+
+bool CanvasTexture::loadText(std::string text)
+{
+	SDL_Color textColor = {0, 0, 0};
+	SDL_Surface* textSurface = TTF_RenderText_Solid(CanvasFont, text.c_str(), textColor);
+	if(textSurface == NULL)
+	{
+		printf("TT_RenderText_Blended error %s\n", TTF_GetError());
+		return false;
+	} else {
+		if(texture != NULL)
+		{
+			SDL_DestroyTexture(texture);
+			texture = NULL;
+		}
+		SDL_Surface* optSurface = SDL_ConvertSurfaceFormat(textSurface, SDL_PIXELFORMAT_RGBA8888, NULL);
+		if(optSurface == NULL)
+		{
+			printf("Unable to convert surface! %s\n", SDL_GetError());
+		} else {
+		texture = SDL_CreateTexture(mainRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, optSurface->w, optSurface->h);
+		if(texture == NULL)
+		{
+			printf("Unable to create texture %s\n", SDL_GetError());
+		} else {
+                SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
+				SDL_LockTexture(texture, &optSurface->clip_rect, &pixel, &pitch);
+				memcpy(pixel, optSurface->pixels, optSurface->pitch*optSurface->h);
+				SDL_UnlockTexture(texture);
+				pixel = NULL;
+				width = optSurface->w;
+				height = optSurface->h;
+			}
+		}
+	}
+	SDL_FreeSurface(textSurface);
+	return texture != NULL;
+}
+
+
+bool CanvasTexture::colorKey(SDL_Color key, SDL_Color to)
+{
+	if(texture == NULL)
+	{
+		printf("happening\n");
+		return false;
+	} else {
+        SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
+		SDL_Surface* optSurface = SDL_ConvertSurfaceFormat(SDL_GetWindowSurface(mainWindow),SDL_PIXELFORMAT_RGBA8888,NULL);
+		if(lockTexture())
+		{
+			printf("happening2\n");
+			Uint32* cPixels = (Uint32*)pixel;
+			int pixelCount = pitch/4*height;
+
+			Uint32 colorK = SDL_MapRGB(optSurface->format, key.r, key.g, key.b);
+			Uint32 colorT = SDL_MapRGB(optSurface->format, to.r, to.g, to.b);
+			for(int i = 0; i < pixelCount; ++i)
+			{
+
+				if(cPixels[i] == colorK)
+				{
+					cPixels[i] = colorT;
+				}
+			}
+		}
+
+		unlockTexture();
+	}
+	return true;
+}
 
 intAnimation::intAnimation(int* value, int destination, int time)
 {
@@ -22,6 +172,10 @@ bool intAnimation::play(int timepassed)
 {
 	if(!time)
 		return false;
+	if(tpassed == 0)
+	{
+		origin = *v;
+	}
 	tpassed += timepassed;
 	double timeFraction =((double)tpassed/(double)time);
 	*v = origin +(timeFraction*(coordinate - origin));
@@ -270,6 +424,7 @@ void gObj::play(int timepassed)
 
 bool gObj::setText(std::string text)
 {
+	ctextTexture.loadText(text);
 	SDL_Surface* textSurface = TTF_RenderText_Blended(CanvasFont, text.c_str(), textColor);
 	if(textSurface == NULL)
 	{
@@ -298,6 +453,7 @@ bool gObj::setText(std::string text)
 
 bool gObj::setImage(std::string img)
 {
+	backgroundTexture.loadImage(img);
 	SDL_Surface* imgSurface = IMG_Load(img.c_str());
 	if(imgSurface == NULL)
 	{
@@ -391,18 +547,20 @@ void gObj::render(int x, int y)
 		renderRect.y = top.v + y;
 		renderRect.w = width.v;
 		renderRect.h = height.v;
-		if(background == NULL)
+		if(backgroundTexture.texture == NULL)
 		{
-			SDL_SetRenderDrawBlendMode(mainRenderer, SDL_BLENDMODE_BLEND);
-			SDL_SetRenderDrawColor(mainRenderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
-			SDL_RenderFillRect(mainRenderer, &renderRect);
+			if(backgroundColor.a != 0)
+			{
+				SDL_SetRenderDrawColor(mainRenderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+				SDL_RenderFillRect(mainRenderer, &renderRect);
+			}
 		} else {
-			SDL_RenderCopy(mainRenderer, background, NULL, &renderRect);
+			SDL_RenderCopy(mainRenderer, backgroundTexture.texture, NULL, &renderRect);
 		}
-		if(textTexture != NULL)
+		if(ctextTexture.texture != NULL)
 		{
 			renderRect.h = fontHeight;
-			renderRect.w = ((double)textWidth)*((double)fontHeight/(double)textHeight);
+			renderRect.w = ((double)ctextTexture.width)*((double)fontHeight/(double)ctextTexture.height);
 			if(textOrientation == RIGHT_TEXT)
 			{
 				renderRect.x = height.v - renderRect.w + left.v;
@@ -413,7 +571,7 @@ void gObj::render(int x, int y)
 				renderRect.x = left.v;
 			}
 			renderRect.x += x;
-			SDL_RenderCopy(mainRenderer, textTexture, NULL, &renderRect);
+			SDL_RenderCopy(mainRenderer, ctextTexture.texture, NULL, &renderRect);
 		}
 		int relativeY = 0;
 		int relativeX = 0;

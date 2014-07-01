@@ -9,6 +9,26 @@
 
 
 
+class CanvasTexture{
+public:
+	SDL_Texture* texture;
+
+	void* pixel;
+
+	int pitch;
+
+	int width;
+	int height;
+
+	CanvasTexture();
+	CanvasTexture(std::string img);
+	bool lockTexture();
+	bool unlockTexture();
+	bool loadImage(std::string img);
+	bool loadText(std::string text);
+	bool colorKey(SDL_Color key, SDL_Color to);
+};
+
 enum DIV_VARIABLES
 {
 	TOP,
@@ -76,8 +96,10 @@ public:
 	gObj* animate(int variable, int destination, int timepassed);
 	void render(int x, int y);
 	SDL_Texture* background;
+	CanvasTexture backgroundTexture;
 	SDL_Color backgroundColor;
 	SDL_Texture* textTexture;
+	CanvasTexture ctextTexture;
 	SDL_Color textColor;
 	int fontHeight;
 	int textHeight;

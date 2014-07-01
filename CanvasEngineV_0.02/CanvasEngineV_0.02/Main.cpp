@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL.h>
+#include <SDL_thread.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "GUI.h"
@@ -12,9 +13,14 @@ TTF_Font* CanvasFont = NULL;
 
 int SCREEN_WIDTH = 1680;
 int SCREEN_HEIGHT = 1020;
+int SCREEN_X = 0;
+int SCREEN_Y = 0;
 
 int lastFrameTime = 0;
 int deltaTime = 0;
+int avgFrameTime = 0;
+int frames = 0;
+int totalFrameTime = 0;
 
 bool quit = false;
 bool CanvasDebug = true;
@@ -32,6 +38,9 @@ static void setFrame()
 {
 	GetDeltaTime();
 	lastFrameTime = SDL_GetTicks();
+	totalFrameTime += deltaTime;
+	frames++;
+	avgFrameTime = (double)totalFrameTime/(double)frames;
 }
 
 bool Init()
@@ -43,7 +52,7 @@ bool Init()
 	}
 	else
 	{
-		mainWindow = SDL_CreateWindow("Canvas Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		mainWindow = SDL_CreateWindow("Canvas Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN|SDL_WINDOW_BORDERLESS);
 		if(mainWindow == NULL)
 		{
 			printf("SDL create window error %s\n", SDL_GetError());
@@ -51,6 +60,7 @@ bool Init()
 		}
 		else{
 			SDL_GetWindowSize(mainWindow, &SCREEN_WIDTH, &SCREEN_HEIGHT);
+			SDL_GetWindowPosition(mainWindow, &SCREEN_X, &SCREEN_Y);
 			mainRenderer = SDL_CreateRenderer( mainWindow, -1, SDL_RENDERER_ACCELERATED);
 			if(mainRenderer == NULL)
 			{
@@ -109,9 +119,10 @@ int main(int argc, char* argv[])
 		gObj* firstDiv = new gObj(100, 100, 400, 400);
 		editorGUI* editor = new editorGUI();
 		firstDiv->setColor(0, 0, 0, 255);
-		printf("%d\n",deltaTime);
+
 		firstDiv->animate(TOP, 200, 1000);
 		editor->initialize();
+		SDL_SetRenderDrawBlendMode(mainRenderer, SDL_BLENDMODE_NONE);
 		while(!quit)
 		{
 
@@ -125,17 +136,19 @@ int main(int argc, char* argv[])
 				editor->handleMouse(&e);
 			}
 
-			SDL_SetRenderDrawColor(mainRenderer, 255, 255, 255, 255);
+			SDL_SetRenderDrawColor(mainRenderer, 40, 40, 40, 255);
 			SDL_RenderClear(mainRenderer);
+
 			setFrame();
-			std::string text = std::to_string( 1000.0/(deltaTime>0?deltaTime:1));
+			std::string text = std::to_string( deltaTime);
+			char* alter = const_cast<char*> (text.c_str());
+
 			firstDiv->setText(text);
 			firstDiv->play(deltaTime);
-			firstDiv->render(0,0);
 			editor->play(deltaTime);
 			editor->render(0,0);
+			firstDiv->render(0,0);
 			SDL_RenderPresent(mainRenderer);
-
 		}
 	}
 	close();

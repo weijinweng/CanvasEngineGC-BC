@@ -83,9 +83,6 @@ tabButton::tabButton(int top, int left, int width, int height, tab* tabTarget, s
 	fontHeight = 30;
 	this->setColor(191, 191, 191, 255);
 	setText(text);
-	SDL_Color black = {0, 0, 0};
-	SDL_Color white = {255, 255, 255};
-	ctextTexture.colorKey(black, white);
 	position = RELATIVE_LEFT;
 	Class = "tabButton";
 

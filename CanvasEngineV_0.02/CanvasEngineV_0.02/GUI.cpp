@@ -92,7 +92,7 @@ bool CanvasTexture::loadImage(std::string img)
 bool CanvasTexture::loadText(std::string text)
 {
 
-	SDL_Surface* textSurface = TTF_RenderText_Blended(CanvasFont, text.c_str(), textColor);
+	SDL_Surface* textSurface = TTF_RenderText_Solid(CanvasFont, text.c_str(), textColor);
 	if(textSurface == NULL)
 	{
 		printf("TT_RenderText_Blended error %s\n", TTF_GetError());
@@ -109,7 +109,6 @@ bool CanvasTexture::loadText(std::string text)
 			printf("SDL_CreateTextureFromSurface error %s\n", SDL_GetError());
 		}
 		else {
-			SDL_SetTextureBlendMode( texture, SDL_BLENDMODE_BLEND );
 			height = textSurface->h;
 			width = textSurface->w;
 		}
@@ -149,6 +148,11 @@ bool CanvasTexture::colorKey(SDL_Color key, SDL_Color to)
 		unlockTexture();
 	}
 	return true;
+}
+
+void renderData::render()
+{
+	SDL_RenderCopy(mainRenderer, texture.texture, NULL, &obj);
 }
 
 intAnimation::intAnimation(int* value, int destination, int time)
@@ -220,19 +224,19 @@ gObj::gObj(int top, int left, int width, int height)
 	this->width = width;
 	this->height = height;
 	this->setColor(255,255,255,0);
-	background = NULL;
-	textTexture = NULL;
 	text = "";
 	id = "";
 	Class = "joe";
 	opacity.v = 0;
 	fontHeight = 40;
-	textColor.r = 255;
-	textColor.b = 255;
-	textColor.g = 255;
-	textColor.a = 255;
 	textOrientation = CENTERED_TEXT;
 	show = true;
+}
+
+void gObj::pollBuffer()
+{
+	events = eventBuffer;
+	eventBuffer = 0;
 }
 
 void gObj::handleMouse(SDL_Event* e)
@@ -259,7 +263,6 @@ void gObj::handleMouse(SDL_Event* e)
 						hover = false;
 					} else
 					{
-
 						onMouseDown();
 						mousedown = true;
 					}
@@ -299,21 +302,6 @@ void gObj::handleMouse(SDL_Event* e)
 					hover = false;
 				}
 			}
-		}
-		int relativeY = 0;
-		int relativeX = 0;
-		for(std::list<gObj*>::iterator it = children.begin(); it!=children.end(); it++)
-		{
-			if((*it)->position == RELATIVE)
-			{
-				(*it)->childHandleMouse(left.v , relativeY + top.v, e);
-				relativeY += (*it)->height.v;
-			}
-			else if((*it)->position == RELATIVE_LEFT)
-			{
-				(*it)->childHandleMouse(relativeX + left.v, top.v, e);
-				relativeX += (*it)->width.v;
-			} else (*it)->childHandleMouse(left.v, top.v, e);
 		}
 	}
 
@@ -382,89 +370,40 @@ void gObj::childHandleMouse(int ix, int iy, SDL_Event* e)
 				}
 			}
 		}
-		int relativeY = 0;
-		int relativeX = 0;
-		for(std::list<gObj*>::iterator it = children.begin(); it!=children.end(); it++)
-		{
-			if((*it)->position == RELATIVE)
-			{
-				(*it)->childHandleMouse(left.v + ix, relativeY + top.v + iy, e);
-				relativeY += (*it)->height.v;
-			}
-			else if((*it)->position == RELATIVE_LEFT)
-			{
-				(*it)->childHandleMouse(relativeX + left.v + ix, top.v + iy, e);
-				relativeX += (*it)->width.v;
-			} else (*it)->childHandleMouse(left.v + ix, top.v + iy, e);
-		}
+
 	}
 }
 
 void gObj::play(int timepassed)
 {
-	top.play(timepassed);
-	left.play(timepassed);
-	width.play(timepassed);
-	height.play(timepassed);
-	opacity.play(timepassed);
-	for(std::list<gObj*>::iterator it = children.begin(); it != children.end(); it++)
+	if(events & MOUSEDOWN)
 	{
-
-		(*it)->play(timepassed);
+		onMouseDown();
+	}
+	if(events & MOUSEUP)
+	{
+		onMouseUp();
+	}
+	if(events & OFFHOVER)
+	{
+		offHover();
+	}
+	if(events & ONHOVER)
+	{
+		onHover();
 	}
 }
 
 bool gObj::setText(std::string text)
 {
-	ctextTexture.loadText(text);
-	SDL_Surface* textSurface = TTF_RenderText_Blended(CanvasFont, text.c_str(), textColor);
-	if(textSurface == NULL)
-	{
-		printf("TT_RenderText_Blended error %s\n", TTF_GetError());
-		return false;
-	} else {
-		if(textTexture != NULL)
-		{
-			SDL_DestroyTexture(textTexture);
-			textTexture = NULL;
-		}
-		textTexture = SDL_CreateTextureFromSurface(mainRenderer, textSurface);
-		if(textTexture == NULL)
-		{
-			printf("SDL_CreateTextureFromSurface error %s\n", SDL_GetError());
-			return false;
-		} else {
-			this->text = text;
-			textHeight = textSurface->h;
-			textWidth = textSurface->w;
-		}
-		SDL_FreeSurface(textSurface);
-	}
+	ctextTexture.texture.loadText(text);
+	this->text = text;
 	return true;
 }
 
 bool gObj::setImage(std::string img)
 {
-	backgroundTexture.loadImage(img);
-	SDL_Surface* imgSurface = IMG_Load(img.c_str());
-	if(imgSurface == NULL)
-	{
-		printf("IMG_Load failed %s\n", IMG_GetError());
-		return false;
-	} else {
-		if(background != NULL)
-		{
-			SDL_DestroyTexture(background);
-			background = NULL;
-		}
-		background = SDL_CreateTextureFromSurface(mainRenderer, imgSurface);
-		if(background == NULL)
-		{
-			printf("SDL_CreateTexture failed %s\n", SDL_GetError());
-			return false;
-		}
-		SDL_FreeSurface(imgSurface);
-	}
+	backgroundTexture.texture.loadImage(img);
 	return true;
 }
 
@@ -493,10 +432,7 @@ void gObj::offHover()
 {
 }
 
-void gObj::addGObj(gObj* obj)
-{
-	children.push_back(obj);
-}
+
 
 gObj* gObj::animate(int variable, int destination, int time)
 {
@@ -531,8 +467,36 @@ gObj* gObj::animate(int variable, int destination, int time)
 	return this;
 }
 
-void gObj::render(int x, int y)
+void gObj::gatherRenderData()
 {
+	backgroundTexture.obj.x = left.v;
+	backgroundTexture.obj.y = top.v;
+	backgroundTexture.obj.w = width.v;
+	backgroundTexture.obj.h = height.v;
+
+	if(text != "")
+	{
+		ctextTexture.obj.h = fontHeight;
+		ctextTexture.obj.w = ((double)ctextTexture.texture.width)*((double)fontHeight/(double)ctextTexture.texture.height);
+		ctextTexture.obj.y = top.v;
+		if(textOrientation == RIGHT_TEXT)
+		{
+			ctextTexture.obj.x = height.v - ctextTexture.obj.w + left.v;
+		} else if (textOrientation == CENTERED_TEXT)
+		{
+			ctextTexture.obj.x = left.v + ((double)(width.v - ctextTexture.obj.w))/2;
+		} else {
+			ctextTexture.obj.x = left.v;
+		}
+	}
+
+}
+
+void gObj::render(std::list<renderData>* data)
+{
+	data->push_back(backgroundTexture);
+	data->push_back(ctextTexture);
+	/*
 	if(show)
 	{
 		renderRect.x = left.v + x;
@@ -565,27 +529,10 @@ void gObj::render(int x, int y)
 			renderRect.x += x;
 			SDL_RenderCopy(mainRenderer, ctextTexture.texture, NULL, &renderRect);
 		}
-		int relativeY = 0;
-		int relativeX = 0;
-		for(std::list<gObj*>::iterator it = children.begin(); it!=children.end(); it++)
-		{
-
-			if((*it)->position == RELATIVE)
-			{
-				(*it)->render(left.v + x, relativeY + top.v+ y);
-				relativeY += (*it)->height.v;
-			}
-			else if((*it)->position == RELATIVE_LEFT)
-			{
-				(*it)->render(relativeX + x + left.v, top.v + y);
-				relativeX += (*it)->width.v;
-			} else (*it)->render(left.v + x, top.v + y);
-		}
 	}
+	*/
 }
 
 gObj::~gObj()
 {
-	SDL_DestroyTexture(background);
-	SDL_DestroyTexture(textTexture);
 }

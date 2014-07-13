@@ -1,18 +1,47 @@
-﻿Build started 7/1/2014 3:28:31 AM.
+﻿Build started 7/11/2014 4:02:00 AM.
      1>Project "C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Engine.cpp GUIassets.cpp Main.cpp World.cpp
+         World.cpp
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(20): error C2146: syntax error : missing ';' before identifier 'renderable'
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(20): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(26): error C2065: 'renderData' : undeclared identifier
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(26): error C2923: 'std::list' : 'renderData' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(46): error C2065: 'renderData' : undeclared identifier
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(46): error C2923: 'std::list' : 'renderData' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(8): error C2143: syntax error : missing ';' before 'World::{ctor}'
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(23): error C3867: 'std::list<_Ty>::begin': function call missing argument list; use '&std::list<_Ty>::begin' to create a pointer to member
+                 with
+                 [
+                     _Ty=int
+                 ]
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(23): error C2440: 'initializing' : cannot convert from 'std::_List_iterator<_Mylist>' to 'std::_List_iterator<_Mylist>'
+                 with
+                 [
+                     _Mylist=std::_List_val<std::_List_simple_types<int>>
+                 ]
+                 and
+                 [
+                     _Mylist=std::_List_val<std::_List_simple_types<renderData>>
+                 ]
+                 No constructor could take the source type, or constructor overload resolution was ambiguous
+         Engine.cpp
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\guiassets.h(24): warning C4091: 'static ' : ignored on left of 'buttonTextures' when no variable is declared
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\engine.cpp(19): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\engine.cpp(133): error C2664: 'World::getEvents' : cannot convert parameter 1 from 'SDL_Event *' to 'SDL_Event'
+                 No constructor could take the source type, or constructor overload resolution was ambiguous
+         Generating Code...
+         Compiling...
          Main.cpp
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\main.cpp(43): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\main.cpp(106): warning C4553: '==' : operator has no effect; did you intend '='?
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\main.cpp(108): warning C4553: '==' : operator has no effect; did you intend '='?
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\Debug\CanvasEngineV_0.02.exe" /INCREMENTAL /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\Debug\CanvasEngineV_0.02.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\Debug\CanvasEngineV_0.02.lib" /MACHINE:X86 Debug\GUI.obj
-         Debug\GUIassets.obj
-         Debug\Main.obj
-         CanvasEngineV_0.02.vcxproj -> C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\Debug\CanvasEngineV_0.02.exe
-     1>Done Building Project "C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" (Build target(s)).
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\guiassets.h(24): warning C4091: 'static ' : ignored on left of 'buttonTextures' when no variable is declared
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\main.cpp(109): warning C4553: '==' : operator has no effect; did you intend '='?
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\main.cpp(111): warning C4553: '==' : operator has no effect; did you intend '='?
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         GUIassets.cpp
+     1>Done Building Project "C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.89
+Time Elapsed 00:00:01.56

@@ -1,3 +1,5 @@
+#include "Engine.h"
+#include "CanvasEngine.h"
 #include <stdio.h>
 #include <SDL.h>
 #include <SDL_thread.h>
@@ -7,9 +9,13 @@
 #include "GUIassets.h"
 #include <string>
 
+
+
+
 SDL_Window* mainWindow = NULL;
 SDL_Renderer* mainRenderer = NULL;
 TTF_Font* CanvasFont = NULL;
+SDL_sem* renderLock ;
 
 int SCREEN_WIDTH = 1680;
 int SCREEN_HEIGHT = 1020;
@@ -38,9 +44,6 @@ static void setFrame()
 {
 	GetDeltaTime();
 	lastFrameTime = SDL_GetTicks();
-	totalFrameTime += deltaTime;
-	frames++;
-	avgFrameTime = (double)totalFrameTime/(double)frames;
 }
 
 bool Init()
@@ -113,7 +116,18 @@ void close()
 
 int main(int argc, char* argv[])
 {
-
+	if(Init())
+	{
+		editorGUI* editor = new editorGUI();
+		CanvasEngine* engine = new CanvasEngine();
+		engine->gui = editor;
+		engine->initialize();
+		while(!quit)
+		{
+			engine->render();
+		}
+	}
+	/*
 	if(Init())
 	{
 		gObj* firstDiv = new gObj(SCREEN_HEIGHT-400, SCREEN_WIDTH-400, 400, 400);
@@ -123,10 +137,8 @@ int main(int argc, char* argv[])
 		editorGUI* editor = new editorGUI();
 		firstDiv->setColor(255, 255, 255, 255);
 		editor->initialize();
-		SDL_SetRenderDrawBlendMode(mainRenderer, SDL_BLENDMODE_NONE);
 		while(!quit)
 		{
-
 			SDL_Event e;
 			while(SDL_PollEvent(&e)>0)
 			{
@@ -139,11 +151,12 @@ int main(int argc, char* argv[])
 
 			SDL_SetRenderDrawColor(mainRenderer, 40, 40, 40, 255);
 			SDL_RenderClear(mainRenderer);
-
 			setFrame();
 			std::string text = std::to_string( deltaTime);
-			char* alter = const_cast<char*> (text.c_str());
+			char* alter = const_cast<char*>(text.c_str());
 			firstDiv->setText(text);
+			char* textc = const_cast<char*>(text.c_str());
+			printf(strcat(textc, "\n"));
 			firstDiv->play(deltaTime);
 			editor->play(deltaTime);
 			editor->render(0,0);
@@ -151,6 +164,7 @@ int main(int argc, char* argv[])
 			SDL_RenderPresent(mainRenderer);
 		}
 	}
+	*/
 	close();
 	return 1;
 }

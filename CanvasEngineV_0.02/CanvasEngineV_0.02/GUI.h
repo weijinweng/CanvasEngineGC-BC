@@ -11,24 +11,45 @@
 
 class CanvasTexture{
 public:
+	//texture
 	SDL_Texture* texture;
-
+	//pixel data
 	void* pixel;
-
+	//the pitch of the texture
 	int pitch;
-
+	//the width and height of the texture
 	int width;
 	int height;
-
+	//Color of the text during load text
 	SDL_Color textColor;
-
+	//constructor, can take a string to preload image
 	CanvasTexture();
 	CanvasTexture(std::string img);
+	//lock the texture for writing
 	bool lockTexture();
+	//unlock the texture for reading
 	bool unlockTexture();
+	//load a image as texture
 	bool loadImage(std::string img);
+	//load a text as a non streamable text data
 	bool loadText(std::string text);
+	//colorkey
 	bool colorKey(SDL_Color key, SDL_Color to);
+};
+
+class renderData{
+public:
+	//texture
+	CanvasTexture texture;
+	//clip from texture
+	SDL_Rect clip;
+	//renderCopy destination
+	SDL_Rect obj;
+	renderData(){
+		obj.w = 0;
+	}
+	//renders to mainRenderer
+	void render();
 };
 
 enum DIV_VARIABLES
@@ -50,7 +71,7 @@ enum TEXT_TYPE
 	RIGHT_TEXT,
 	LEFT_TEXT
 };
-//Animations a int value based on destination value and time.
+//Animates a int value based on destination value and time.
 class intAnimation
 {
 public:
@@ -80,40 +101,56 @@ public:
 
 class gObj
 {
-	SDL_Rect renderRect;
 public:
+	enum 
+	{
+		MOUSEDOWN = 1 << 0,
+		MOUSEUP = 1 << 1,
+		ONHOVER = 1 << 2,
+		OFFHOVER = 1 << 3
+	};
+	SDL_Rect renderRect;
+	bool update;
 	gObj(int top, int left, int width, int height);
 	~gObj();
 	bool setImage(std::string img);
 	void setColor(int r, int g, int b, int a);
 	bool setText(std::string text);
+	//pushes events into eventBuffer
 	virtual void handleMouse(SDL_Event* e);
+	//handle mouse as child
 	virtual void childHandleMouse(int x, int y, SDL_Event* e);
 	virtual void onMouseDown();
 	virtual void onMouseUp();
 	virtual void onHover();
 	virtual void offHover();
-	void addGObj( gObj* obj);
 	void play(int timepassed);
+	void pollBuffer();
 	gObj* animate(int variable, int destination, int timepassed);
-	void render(int x, int y);
-	SDL_Texture* background;
-	CanvasTexture backgroundTexture;
+	virtual void gatherRenderData();
+	virtual void render(std::list<renderData>* data);
+	renderData backgroundTexture;
 	SDL_Color backgroundColor;
-	SDL_Texture* textTexture;
-	CanvasTexture ctextTexture;
-	SDL_Color textColor;
+	renderData ctextTexture;
 	int fontHeight;
 	int textHeight;
 	int textWidth;
 	int textOrientation;
+	//Stores the position type of the object
 	int position;
+	//Stores the events to be polled by play
+	int eventBuffer;
+	int events;
+	//opacity, currently not needed
 	Cint opacity;
+	//current text value of the object.
 	std::string text;
+	//id of the object, should be distinct
 	std::string id;
+	//class of the object, for objects that would have multiple version with similiar functions.
 	std::string Class;
+	//parameters
 	Cint top, left, width, height;
-	std::list<gObj*> children;
 	bool mousedown;
 	bool hover;
 	bool show;

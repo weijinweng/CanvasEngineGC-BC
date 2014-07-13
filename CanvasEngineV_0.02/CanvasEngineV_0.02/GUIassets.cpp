@@ -12,6 +12,7 @@ extern int SCREEN_HEIGHT;
 extern int SCREEN_X;
 extern int SCREEN_Y;
 extern SDL_Window* mainWindow;
+extern SDL_Renderer* mainRenderer;
 extern bool quit;
 
 draggableWindow::draggableWindow(int left, int top, int width, int height):gObj(top, left, width, height)
@@ -51,8 +52,10 @@ void draggableWindow::offHover()
 	{
 		int velX;
 		int velY;
-		SDL_GetRelativeMouseState(&velX, &velY);
-		SDL_SetWindowPosition(mainWindow, SCREEN_X +velX, SCREEN_Y + velY);
+		SDL_GetMouseState(&velX, &velY);
+		int xChange = velX - xOffset;
+		int yChange = velY - yOffset;
+		SDL_SetWindowPosition(mainWindow, SCREEN_X + xChange, SCREEN_Y + yChange);
 		SDL_GetWindowPosition(mainWindow, &SCREEN_X, &SCREEN_Y);
 	}
 }
@@ -66,7 +69,7 @@ tab::tab(int left, int top, int width, int height, editorGUI* gui):gObj(top, lef
 {
 	container = gui;
 	Class = "tab";
-	this->setColor(40, 40, 40, 255);
+	this->setImage("img/button/dark.png");
 	position = ABSOLUTE;
 }
 
@@ -77,53 +80,56 @@ tab* tab::showTab()
 	return this;
 }
 
+buttonTextures tabButton::texturepack;
+
 tabButton::tabButton(int top, int left, int width, int height, tab* tabTarget, std::string text):gObj(top, left, width, height)
 {
+	if(!texturepack.init)
+	{
+		texturepack.onClick.loadImage("img/button/yellowDark.png");
+		texturepack.onHover.loadImage("img/button/yellow.png");
+		texturepack.onDefault.loadImage("img/button/grey.png");
+	}
 	target = tabTarget;
 	fontHeight = 25;
-	this->setColor(191, 191, 191, 255);
 	SDL_Color grey = {40, 40, 40};
-	ctextTexture.textColor = grey;
+	ctextTexture.texture.textColor = grey;
 	setText(text);
-
-
-
 	position = RELATIVE_LEFT;
 	Class = "tabButton";
-
-	
 }
 
 void tabButton::offHover()
 {
 	if(target->show)
 	{
-		this->setColor(242, 246, 172, 255);
+		backgroundTexture.texture = texturepack.onClick;
 	} else {
-		this->setColor(191, 191, 191, 255);
+		backgroundTexture.texture = texturepack.onDefault;
 	}
 }
 
 void tabButton::onHover()
 {
-	this->setColor(248, 252, 176, 255);
+	backgroundTexture.texture = texturepack.onHover;
 }
 void tabButton::onMouseDown()
 {
-	this->setColor(242, 246, 172, 255);
+	backgroundTexture.texture = texturepack.onClick;
 	target->showTab();
 }
 
 void tabButton::onMouseUp()
 {
-	setColor(248, 252, 176, 255);
+	printf("clicked\n");
+	backgroundTexture.texture = texturepack.onHover;
 }
 
 boolToggler::boolToggler(int top, int left, int width, int height, bool* target, std::string text):gObj(top, left, width, height)
 {
 	this->target = target;
 	SDL_Color grey = {40, 40, 40};
-	ctextTexture.textColor = grey;
+	ctextTexture.texture.textColor = grey;
 	setText(text);
 }
 
@@ -132,9 +138,7 @@ void boolToggler::onMouseUp()
 	if(mousedown)
 	{
 		*target = !*target;
-
 	}
-
 }
 
 void boolToggler::onMouseDown()
@@ -142,71 +146,112 @@ void boolToggler::onMouseDown()
 
 }
 
+buttonTextures quitButton::texturepack;
+
 quitButton::quitButton():boolToggler(0, SCREEN_WIDTH-50, 50, 40, &quit, "X")
 {
-	setColor(14, 65, 194, 255);
-	textColor.a = 255;
-	textColor.r = 255;
-	textColor.g = 255;
-	textColor.b = 255;
+	if(!texturepack.init)
+	{
+		texturepack.onClick.loadImage("img/button/yellowDark.png");
+		texturepack.onHover.loadImage("img/button/yellow.png");
+		texturepack.onDefault.loadImage("img/button/grey.png");
+	}
 	fontHeight = 25;
 }
 
 void quitButton::offHover()
 {
 
-	this->setColor(242, 246, 172, 255);
+	backgroundTexture.texture = texturepack.onHover;
 
 }
 
 void quitButton::onHover()
 {
-	this->setColor(248, 252, 176, 255);
+	backgroundTexture.texture = texturepack.onClick;
 }
 void quitButton::onMouseDown()
 {
-	this->setColor(242, 246, 172, 255);
+	backgroundTexture.texture = texturepack.onHover;
 }
 
 void quitButton::onMouseUp()
 {
-
 	if(mousedown)
 	{
 		*target = !*target;
 	}
 }
 
-editorGUI::editorGUI():gObj(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+editorGUI::editorGUI()
 {
+	renderSem = SDL_CreateSemaphore(1);
+	eventSem = SDL_CreateSemaphore(1);
 	draggableWindow* drag = new draggableWindow(0,0,SCREEN_WIDTH,40);
-	addGObj(drag);
+	addgObj(drag);
 	gObj* logo = new gObj(0, 0, 300, 40);
 	logo->setImage("img/logo/logo.png");
-	addGObj(logo);
+	addgObj(logo);
 	quitButton* qButton = new quitButton();
-	addGObj(qButton);
+	addgObj(qButton);
 	tab* firstTab = new tab(0, 40, SCREEN_WIDTH, 140, this);
-	addGObj(firstTab);
+	addgObj(firstTab);
 	tabButton* firstTabButton = new tabButton(180, 0, 100, 30, firstTab, "home");
-	addGObj(firstTabButton);
+	addgObj(firstTabButton);
 	tab* secondTab = new tab(0, 40, SCREEN_WIDTH, 140, this);
-	addGObj(secondTab);
-	tabButton* secondTabButton = new tabButton(180, 0, 100, 30, secondTab, "debug");
-	addGObj(secondTabButton);
+	addgObj(secondTab);
+	tabButton* secondTabButton = new tabButton(180, 100, 100, 30, secondTab, "debug");
+	addgObj(secondTabButton);
 	firstTab->showTab();
 	gObj* partitioner = new gObj(178, 0, SCREEN_WIDTH, 2);
-	partitioner->setColor(242, 246, 172, 255);
-	addGObj(partitioner);
+	partitioner->setImage("img/button/yellow.png");
+	addgObj(partitioner);
 	gObj* partitioner2 = new gObj(39, 0, SCREEN_WIDTH, 2);
-	partitioner2->setColor(242, 246, 172, 255);
-	addGObj(partitioner2);
+	partitioner2->setImage("img/button/yellowDark.png");
+	addgObj(partitioner2);
 
 }
 
-void editorGUI::initialize()
+void editorGUI::handleMouse()
+{
+	while(eventBuffer.size() > 0)
+	{
+		SDL_SemWait(eventSem);
+		SDL_Event e = eventBuffer.front();
+		eventBuffer.pop_front();
+		SDL_SemPost(eventSem);
+		int relativeY = 0;
+		int relativeX = 0;
+
+		for(std::list<gObj*>::iterator it = children.begin(); it!=children.end(); it++)
+		{
+			if((*it)->position == RELATIVE)
+			{
+				(*it)->childHandleMouse(0 , 0, &e);
+
+			}
+			else if((*it)->position == RELATIVE_LEFT)
+			{
+				(*it)->childHandleMouse(0, 0, &e);
+				relativeX += (*it)->width.v;
+			} else (*it)->childHandleMouse(0, 0, &e);
+		}
+
+	}
+}
+
+bool editorGUI::initialize()
+{
+	return true;
+}
+
+bool editorGUI::simulate()
 {
 
+	timer.getDeltaTime();
+	handleMouse();
+	play(timer.deltaTime);
+	return true;
 }
 
 void editorGUI::hideAll(std::string cls)
@@ -221,4 +266,31 @@ void editorGUI::hideAll(std::string cls)
 		}
 	}
 
+}
+
+void editorGUI::addgObj(gObj* obj)
+{
+	children.push_back(obj);
+}
+
+void editorGUI::play(int timepassed)
+{
+	SDL_SemWait(renderSem);
+	renderBuffer.clear();
+	for(std::list<gObj*>::iterator it = children.begin(); it != children.end(); it++)
+	{
+		(*it)->gatherRenderData();
+		(*it)->render(&renderBuffer);
+	}
+	SDL_SemPost(renderSem);
+}
+
+void editorGUI::render(int x, int y)
+{
+		SDL_SemWait(renderSem);
+		for(std::list<renderData>::iterator it = renderBuffer.begin(); it!=renderBuffer.end(); it++)
+		{
+			(*it).render();
+		}
+		SDL_SemPost(renderSem);
 }

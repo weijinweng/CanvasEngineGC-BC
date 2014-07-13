@@ -1,14 +1,14 @@
-﻿Build started 7/11/2014 4:02:00 AM.
+﻿Build started 7/12/2014 9:43:30 PM.
      1>Project "C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Engine.cpp GUIassets.cpp Main.cpp World.cpp
          World.cpp
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(20): error C2146: syntax error : missing ';' before identifier 'renderable'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(20): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(26): error C2065: 'renderData' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(26): error C2923: 'std::list' : 'renderData' is not a valid template type argument for parameter '_Ty'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(46): error C2065: 'renderData' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(46): error C2923: 'std::list' : 'renderData' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(28): error C2146: syntax error : missing ';' before identifier 'renderable'
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(28): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(34): error C2065: 'renderData' : undeclared identifier
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(34): error C2923: 'std::list' : 'renderData' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(55): error C2065: 'renderData' : undeclared identifier
+     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(55): error C2923: 'std::list' : 'renderData' is not a valid template type argument for parameter '_Ty'
      1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(8): error C2143: syntax error : missing ';' before 'World::{ctor}'
      1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
      1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(23): error C3867: 'std::list<_Ty>::begin': function call missing argument list; use '&std::list<_Ty>::begin' to create a pointer to member
@@ -44,4 +44,4 @@
 
 Build FAILED.
 
-Time Elapsed 00:00:01.56
+Time Elapsed 00:00:01.70

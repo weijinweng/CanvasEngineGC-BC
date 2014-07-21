@@ -1,128 +1,52 @@
-﻿Build started 7/12/2014 10:33:21 PM.
-     1>Project "C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2014/7/21 15:23:36.
+     1>Project "C:\Users\Administrator\Documents\CanvasEngine_v0.01\CanvasEngine_v0.01\github\CanvasEngineGC-BC\CanvasEngineV_0.02\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt AiEngine.cpp Engine.cpp World.cpp
          World.cpp
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\engine.h(4): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(28): error C2146: syntax error : missing ';' before identifier 'renderable'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(28): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(34): error C2065: 'renderData' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(34): error C2923: 'std::list' : 'renderData' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(55): error C2065: 'renderData' : undeclared identifier
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.h(55): error C2923: 'std::list' : 'renderData' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(8): error C2143: syntax error : missing ';' before 'World::{ctor}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(23): error C3867: 'std::list<_Ty>::begin': function call missing argument list; use '&std::list<_Ty>::begin' to create a pointer to member
+                 with
+                 [
+                     _Ty=int
+                 ]
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\world.cpp(23): error C2440: 'initializing' : cannot convert from 'std::_List_iterator<_Mylist>' to 'std::_List_iterator<_Mylist>'
+                 with
+                 [
+                     _Mylist=std::_List_val<std::_List_simple_types<int>>
+                 ]
+                 and
+                 [
+                     _Mylist=std::_List_val<std::_List_simple_types<renderData>>
+                 ]
+                 No constructor could take the source type, or constructor overload resolution was ambiguous
          Engine.cpp
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\engine.h(4): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\guiassets.h(24): warning C4091: 'static ' : ignored on left of 'buttonTextures' when no variable is declared
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\engine.cpp(19): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\engine.cpp(133): error C2664: 'World::getEvents' : cannot convert parameter 1 from 'SDL_Event *' to 'SDL_Event'
+                 No constructor could take the source type, or constructor overload resolution was ambiguous
          AiEngine.cpp
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(74): error C2143: syntax error : missing ';' before '*'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(75): error C2143: syntax error : missing ';' before '*'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(89): error C2143: syntax error : missing ';' before '*'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(89): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(90): error C2143: syntax error : missing ';' before '*'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(90): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(98): error C2143: syntax error : missing ';' before '*'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(98): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(115): error C2143: syntax error : missing ';' before '*'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(115): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(116): error C2143: syntax error : missing ';' before '*'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(116): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(117): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(117): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(118): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(118): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(118): error C2059: syntax error : ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(120): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(123): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(127): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(133): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(135): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(135): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(135): error C2059: syntax error : ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(136): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(136): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(149): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(152): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(156): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(156): error C2065: 'B' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(156): error C2143: syntax error : missing ',' before ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(159): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(163): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(176): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(176): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(176): error C2059: syntax error : ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(177): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(177): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(177): error C2059: syntax error : ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(178): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(178): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(178): error C2059: syntax error : ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(181): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(184): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(187): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(187): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(188): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(188): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.h(201): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(9): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(14): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(17): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(22): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(25): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(30): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(33): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(33): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(33): error C2059: syntax error : ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(34): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(44): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(47): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(58): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(63): error C2065: 'personB' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(63): error C2227: left of '->idNum' must point to class/struct/union/generic type
-                 type is ''unknown-type''
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(63): error C2143: syntax error : missing ',' before ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(65): error C2065: 'personB' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(65): error C2227: left of '->idNum' must point to class/struct/union/generic type
-                 type is ''unknown-type''
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(65): error C2143: syntax error : missing ',' before ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(72): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(74): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(81): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(83): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(85): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(90): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(92): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(93): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(96): error C2653: 'aiRelation' : is not a class or namespace name
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(96): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(96): error C2065: 'B' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(96): error C2143: syntax error : missing ',' before ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(97): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(100): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(102): error C2653: 'aiRelation' : is not a class or namespace name
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(103): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(116): error C2065: 'personB' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(116): error C2227: left of '->idNum' must point to class/struct/union/generic type
-                 type is ''unknown-type''
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(116): error C2143: syntax error : missing ',' before ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(118): error C2065: 'personB' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(118): error C2227: left of '->idNum' must point to class/struct/union/generic type
-                 type is ''unknown-type''
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(118): error C2143: syntax error : missing ',' before ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(124): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(126): error C2653: 'aiSchedule' : is not a class or namespace name
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(126): error C2065: 'aiPerson' : undeclared identifier
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(126): error C2059: syntax error : '>'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(126): error C2059: syntax error : ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(127): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(131): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(133): error C2653: 'aiSchedule' : is not a class or namespace name
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(134): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(135): error C2143: syntax error : missing ')' before ';'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(135): error C2059: syntax error : ')'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(136): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(138): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(140): error C2143: syntax error : missing ';' before '}'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(142): error C2653: 'aiSchedule' : is not a class or namespace name
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(143): error C2143: syntax error : missing ';' before '{'
-     1>c:\users\weijin\documents\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(143): fatal error C1003: error count exceeds 100; stopping compilation
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(242): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(732): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(928): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(932): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(937): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(939): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(944): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(946): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(951): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(953): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(955): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\administrator\documents\canvasengine_v0.01\canvasengine_v0.01\github\canvasenginegc-bc\canvasenginev_0.02\canvasenginev_0.02\aiengine.cpp(960): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
          Generating Code...
-     1>Done Building Project "C:\Users\weijin\Documents\GitHub\CanvasEngineGC-BC\CanvasEngineV_0.02\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" (Build target(s)) -- FAILED.
+     1>Done Building Project "C:\Users\Administrator\Documents\CanvasEngine_v0.01\CanvasEngine_v0.01\github\CanvasEngineGC-BC\CanvasEngineV_0.02\CanvasEngineV_0.02\CanvasEngineV_0.02.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:00.75
+Time Elapsed 00:00:01.62

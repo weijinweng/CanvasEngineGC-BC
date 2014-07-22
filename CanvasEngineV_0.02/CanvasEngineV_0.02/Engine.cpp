@@ -13,10 +13,7 @@ int initWorldThread(void* data);
 int initGUIThread(void* data);
 int initPollEvent(void* data);
 
-int initSystemThread(void* data)
-{
-	CanvasSystem* instance 
-}
+
 
 int initGUIThread(void* data)
 {
@@ -130,7 +127,7 @@ int CanvasEngine::PollEventThread()
 	while(SDL_PollEvent(&e)>0)
 	{
 		if(world!=NULL)
-			world->getEvents(&e);
+			world->getEvents(e);
 		if(gui!=NULL)
 		{
 			printf("lol\n");

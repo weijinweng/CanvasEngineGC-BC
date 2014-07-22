@@ -4,10 +4,13 @@
 #include "physicsEngine.h"
 #include <SDL.h>
 #include <SDL_thread.h>
+#include "GUI.h"
 
+class physicsEngine;
 class World;
 class Layer;
 class Obj;
+class Camera;
 
 struct Key
 {
@@ -15,14 +18,19 @@ struct Key
 	bool on;
 };
 
-class Layer{
-	std::list<Layer*> sharedLayers;
-	std::list<Obj*> contained;
+enum ObjType
+{
+	TERRAIN,
+	PERSON,
+	BACKGROUND
 };
+
 
 class Obj
 {
 public:
+	bool show;
+	ObjType type;
 	std::list<Obj*> children;
 	World* containerWorld;
 	renderData renderable;
@@ -31,18 +39,39 @@ public:
 	virtual void calibrateRenderable();
 	virtual void setWorld(World* world);
 	virtual void behave();
-	virtual void render(std::list<renderData>* data, physicsBox camera);
+	virtual void simulate(int deltaTime);
+	virtual void render(std::list<renderData>* data, Camera* camera);
+};
+
+class Camera{
+public:
+	SDL_Rect obj;
+	SDL_Texture* cameraTexture;
+	std::list<renderData> renderBuffer;
+	int flipAngle;
+	Camera(){}
+	void setScreenSize(int width, int height);
+	void render();
+	~Camera(){}
 };
 
 class collidableObj:public Obj
 {
 public:
-	physicsObject* obj;
+	double height;
 	collidableObj();
 	collidableObj(double x, double y, double w, double h);
+	virtual void setCollider(double x, double y, double w, double h);
+	virtual bool onCollide(collidableObj* other);
 	virtual void setWorld(World* world);
 	virtual void calibratePhysics();
-	virtual void move(double x, double y);
+	virtual void move(double x, double y);	
+};
+
+class terrain:public collidableObj
+{
+public:
+	virtual bool onCollide(collidableObj* other);
 };
 
 class World:public CanvasSystem
@@ -50,11 +79,10 @@ class World:public CanvasSystem
 public:
 	SDL_sem* renderSem;
 	SDL_sem* eventSem;
-	SDL_sem* positionSem;
-	physicsBox camera;
-	std::list<renderData> renderBuffer;
+	Camera camera;
 	std::list<SDL_Event> eventBuffer;
 	physicsEngine* physics;
+	std::list<Obj*> objs;
 	World();
 	virtual bool simulate();
 	virtual bool initialize();

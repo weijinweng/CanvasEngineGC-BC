@@ -3,7 +3,7 @@
 #include <SDL_thread.h>
 #include "GUI.h"
 
-ex
+
 
 World::World()
 {
@@ -20,7 +20,7 @@ void World::getEvents(SDL_Event e)
 
 void World::render()
 {
-	for(std::list<renderData>::iterator it = renderBuffer.begin, et = renderBuffer.end();it != et; it++)
+	for(std::list<renderData>::iterator it = camera.renderBuffer.begin(), et = camera.renderBuffer.end();it != et; it++)
 	{
 		(*it).render();
 	}

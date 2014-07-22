@@ -8,6 +8,7 @@
 #include "GUI.h"
 #include "GUIassets.h"
 #include <string>
+#include "physicsShape.h"
 
 
 
@@ -71,7 +72,7 @@ bool Init()
 				return false;
 			}
 				else{
-					SDL_SetRenderDrawColor( mainRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+					SDL_SetRenderDrawColor( mainRenderer, 255, 255, 255, 255 );
 					int imgflags = IMG_INIT_PNG;
 					if(!(IMG_Init(imgflags) & imgflags))
 					{
@@ -116,8 +117,39 @@ void close()
 
 int main(int argc, char* argv[])
 {
+	
 	if(Init())
 	{
+		physicsEngine engine;
+		physicsCircle* circle = new physicsCircle(20);
+		physicsBody body(circle, 200, 40);
+		body.setOrient(0.2);
+		physicsPolygon* poly = new physicsPolygon();
+		poly->setBox(100, 100);
+		poly->setOrient(0);
+		physicsPolygon* poly2 = new physicsPolygon();
+		poly2->setBox(20, 20);
+		poly2->setOrient(1);
+		physicsBody otherBod(poly, 200, 400);
+		physicsBody newBod(poly2, 200,100);
+		physicsBody othernewBod(poly2, 200, 0 );
+		othernewBod.material.dynamicFriction = 0.3;
+		othernewBod.material.staticFriction = 0.1;
+		newBod.setOrient(1);
+		otherBod.setStatic();
+		engine.addObject(&body);
+		engine.addObject(&otherBod);
+		engine.addObject(&newBod);
+		engine.addObject(&othernewBod);
+		while(!quit)
+		{
+			SDL_SetRenderDrawColor( mainRenderer, 255, 255, 255, 255 );
+			SDL_RenderClear(mainRenderer);
+			engine.simulate();
+			engine.render();
+			SDL_RenderPresent(mainRenderer);
+		}
+		/*
 		editorGUI* editor = new editorGUI();
 		CanvasEngine* engine = new CanvasEngine();
 		engine->gui = editor;
@@ -126,7 +158,9 @@ int main(int argc, char* argv[])
 		{
 			engine->render();
 		}
+		*/
 	}
+	
 	/*
 	if(Init())
 	{
